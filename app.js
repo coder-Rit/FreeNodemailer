@@ -36,8 +36,8 @@ app.post("/postEmail/visitedUserDetail", async (req, res, next) => {
     });
 
     let message = {
-      from: `"Sanjay," <${process.env.JIORIL_GMAIL}>`, // sender address
-      to: `${req.body.email}`, // list of receivers
+      from: `"${req.body.name}", <${req.body.email}>`, // sender address
+      to: `${process.env.JIORIL_GMAIL}`, // list of receivers
       subject: `${req.body.name} is visited at JioRil`, // Subject line
       text: "", // plain text body
       html: `
@@ -150,8 +150,8 @@ app.post("/postEmail/userMessageQuery", async (req, res, next) => {
     });
 
     let message = {
-      from: `"Sanjay," <${process.env.JIORIL_GMAIL}>`, // sender address
-      to: `${req.body.email}`, // list of receivers
+      from: `"${req.body.name}", <${req.body.email}>`, // sender address
+      to: `${process.env.JIORIL_GMAIL}`,  // list of receivers
       subject: `${req.body.name} has a Query`, // Subject line
       text: "", // plain text body
       html: `
