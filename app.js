@@ -24,9 +24,10 @@ app.get("/", (req, res, next) => {
 app.post("/postEmail", async (req, res, next) => {
   /** testing account */
 
-  if (!req.body.email) {
-    return next(new ErrorHandler("please enter the email", 400));
-  }
+
+  try {
+    
+   
 
   // create reusable transporter object using the default SMTP transport
   let transporter = nodemailer.createTransport({
@@ -34,18 +35,18 @@ app.post("/postEmail", async (req, res, next) => {
     port: 587,
     host: "smtp.gmail.com",
     auth: {
-      user: "postmantesting205@gmail.com", // generated ethereal user
-      pass: "tsxldqljauuzquri", // generated ethereal password
+      user: `${process.env.JIORIL_GMAIL}`, // generated ethereal user
+      pass: `${process.env.JIORIL_GMAIL_PASS}`, // generated ethereal password
     },
   });
 
-  let message = {
-    from: '"schoolOil" <postmantesting205@gmail.com>', // sender address
+   let message = {
+    from: `"Sanjay," <${process.env.JIORIL_GMAIL}>`, // sender address
     to: `${req.body.email}`, // list of receivers
-    subject: "Message from smtp", // Subject line
+    subject: "Testing gamil", // Subject line
     text: "", // plain text body
     html: `<div>
-        Ram Ram.</sapn>
+        testing gamil. no need to worry.</sapn>
          </br>
          </br>
          
@@ -57,7 +58,7 @@ app.post("/postEmail", async (req, res, next) => {
     .sendMail(message)
     .then((info) => {
       return res.status(201).json({
-        msg: "OTP send to your email",
+        msg: "Query sended",
         status: true,
         info: info.messageId,
         preview: nodemailer.getTestMessageUrl(info),
@@ -66,6 +67,12 @@ app.post("/postEmail", async (req, res, next) => {
     .catch((error) => {
       return res.status(500).json({ error });
     });
+
+  } catch (error) {
+    console.log(error);
+  }
+
+
 });
 
 module.exports = app;
